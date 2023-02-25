@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:3000")
@@ -21,6 +22,12 @@ public class EmployeeController {
         List<Employee> employees = service.getAllEmployees();
         service.sortEmployeesByFirstName(employees);
         return employees;
+    }
+
+    @GetMapping("/employee/{id}")
+    public Optional<Employee> getEmployee(@PathVariable long id){
+         log.info("Employee: " + service.findById(id));
+        return service.findById(id);
     }
 
     @PostMapping("/save")

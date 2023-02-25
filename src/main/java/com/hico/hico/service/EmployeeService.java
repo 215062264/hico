@@ -15,8 +15,6 @@ public class EmployeeService {
     public EmployeeRepository repository;
     public Employee save(Employee employee){return repository.save(employee);}
 
-    public Optional<Employee> findEmployeeById(long id){return repository.findById(id);}
-
     public List<Employee> getAllEmployees(){return repository.findAll();}
 
     public void deleteEmployee(long id){
@@ -27,5 +25,7 @@ public class EmployeeService {
         employees.sort(Comparator.comparing(Employee::getFirstName));
     }
 
-
+    public Optional<Employee> findById(long id) {
+        return repository.findById(id);
+    }
 }
