@@ -19,22 +19,41 @@ public class EmployeeController {
 
     @GetMapping
     public List<Employee> getAllEmployees(){
-        List<Employee> employees = service.getAllEmployees();
-        service.sortEmployeesByFirstName(employees);
+        List<Employee> employees = null;
+        try{
+            employees = service.getAllEmployees();
+            service.sortEmployeesByFirstName(employees);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
         return employees;
     }
 
     @GetMapping("/employee/{id}")
     public Optional<Employee> getEmployee(@PathVariable long id){
-         log.info("Employee: " + service.findById(id));
-        return service.findById(id);
+        Optional<Employee> employee = null;
+        try {
+             employee = service.findById(id);
+            log.info("Employee: " + employee.toString());
+        }catch (Exception e){
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return employee;
     }
 
     @PostMapping("/save")
     @ResponseBody
     public Employee save(@RequestBody Employee employee){
-        log.info("Created Employee: " + employee.toString());
-        return service.save(employee);
+        try {
+            service.save(employee);
+            log.info("Employee: " + employee.toString());
+        }catch (Exception e){
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return employee;
     }
 
     @DeleteMapping
